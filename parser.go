@@ -1,44 +1,50 @@
 package pacmanconf
 
 import (
+	"fmt"
+	"github.com/Morganamilo/go-pacmanconf/ini"
 	"strconv"
-	"strings"
 )
 
-func parse(data string) *Config {
-	var repo *Repository
-	lines := strings.Split(data, "\n")
-	conf := &Config{UseDelta: -1}
-	header := ""
+type callbackData struct {
+	conf *Config
+	repo *Repository
+}
 
-	for _, line := range lines {
-		line = strings.TrimSpace(line)
-
-		if strings.HasPrefix(line, "[") && strings.HasSuffix(line, "]") {
-			runes := []rune(line)
-			header = string(runes[1 : len(runes)-1])
-			continue
-		}
-
-		key, value := splitPair(line)
-
-		if header == "options" {
-			setOption(conf, key, value)
-		} else {
-			if repo == nil || repo.Name != header {
-				repo = conf.Repository(header)
-				if repo == nil {
-					conf.Repositories = append(conf.Repositories, Repository{})
-					repo = &conf.Repositories[len(conf.Repositories)-1]
-					repo.Name = header
-				}
-			}
-
-			setRepo(repo, key, value)
-		}
+func parseCallback(fileName string, line int, section string,
+	key string, value string, data interface{}) error {
+	if line < 0 {
+		return fmt.Errorf("unable to read file: %s: %s", fileName, section)
 	}
 
-	return conf
+	d, ok := data.(*callbackData)
+	if !ok {
+		return fmt.Errorf("type assert failed when parsing: &s", fileName)
+	}
+
+	if key == "" && value == "" {
+		if section == "options" {
+			d.repo = nil
+		} else {
+			d.conf.Repositories = append(d.conf.Repositories, Repository{})
+			d.repo = &d.conf.Repositories[len(d.conf.Repositories)-1]
+			d.repo.Name = section
+		}
+
+		return nil
+	}
+
+	if section == "" {
+		return fmt.Errorf("line %d is not in a section: %s", line, fileName)
+	}
+
+	if d.repo == nil {
+		setOption(d.conf, key, value)
+	} else {
+		setRepo(d.repo, key, value)
+	}
+
+	return nil
 }
 
 func setRepo(repo *Repository, key string, value string) {
@@ -108,31 +114,20 @@ func setOption(conf *Config, key string, value string) {
 	}
 }
 
-func splitPair(line string) (string, string) {
-	split := strings.SplitN(line, "=", 2)
-
-	key := strings.TrimSpace(split[0])
-
-	if len(split) == 1 {
-		return key, ""
-	}
-
-	value := strings.TrimSpace(split[1])
-	return key, value
-}
-
-func Parse(data string) *Config {
-	return parse(data)
+func Parse(iniData string) (*Config, error) {
+	data := callbackData{&Config{UseDelta: -1}, nil}
+	err := ini.Parse(iniData, parseCallback, &data)
+	return data.conf, err
 }
 
 func PacmanConf(args ...string) (*Config, string, error) {
-	stdout, stderr, err :=  pacmanconf(args)
+	stdout, stderr, err := pacmanconf(args)
 
 	if err != nil {
 		return nil, stderr, err
 	}
 
-	conf := parse(stdout)
+	conf, err := Parse(stdout)
 
-	return conf, stderr, nil
+	return conf, "", err
 }
