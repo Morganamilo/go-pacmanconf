@@ -115,7 +115,7 @@ func setOption(conf *Config, key string, value string) {
 }
 
 func Parse(iniData string) (*Config, error) {
-	data := callbackData{&Config{UseDelta: -1}, nil}
+	data := callbackData{&Config{}, nil}
 	err := ini.Parse(iniData, parseCallback, &data)
 	return data.conf, err
 }
