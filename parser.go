@@ -26,8 +26,8 @@ func parseCallback(fileName string, line int, section string,
 		if section == "options" {
 			d.repo = nil
 		} else {
-			d.conf.Repositories = append(d.conf.Repositories, Repository{})
-			d.repo = &d.conf.Repositories[len(d.conf.Repositories)-1]
+			d.conf.Repos = append(d.conf.Repos, Repository{})
+			d.repo = &d.conf.Repos[len(d.conf.Repos)-1]
 			d.repo.Name = section
 		}
 
@@ -50,7 +50,7 @@ func parseCallback(fileName string, line int, section string,
 func setRepo(repo *Repository, key string, value string) {
 	switch key {
 	case "Server":
-		repo.Server = append(repo.Server, value)
+		repo.Servers = append(repo.Servers, value)
 	case "SigLevel":
 		repo.SigLevel = append(repo.SigLevel, value)
 	case "Usage":

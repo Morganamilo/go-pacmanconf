@@ -2,7 +2,7 @@ package pacmanconf
 
 type Repository struct {
 	Name     string
-	Server   []string
+	Servers  []string
 	SigLevel []string
 	Usage    []string
 }
@@ -32,11 +32,11 @@ type Config struct {
 	CheckSpace             bool
 	VerbosePkglists        bool
 	DisableDownloadTimeout bool
-	Repositories           []Repository
+	Repos                  []Repository
 }
 
 func (conf *Config) Repository(name string) *Repository {
-	for _, repo := range conf.Repositories {
+	for _, repo := range conf.Repos {
 		if repo.Name == name {
 			return &repo
 		}
