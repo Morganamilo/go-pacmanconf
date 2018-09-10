@@ -108,7 +108,7 @@ func setOption(conf *Config, key string, value string) {
 	case "CheckSpace":
 		conf.CheckSpace = true
 	case "VerbosePkgLists":
-		conf.VerbosePkglists = true
+		conf.VerbosePkgLists = true
 	case "DisableDownloadTimeout":
 		conf.DisableDownloadTimeout = true
 	}

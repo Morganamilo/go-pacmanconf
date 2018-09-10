@@ -30,7 +30,7 @@ type Config struct {
 	UseDelta               float64
 	TotalDownload          bool
 	CheckSpace             bool
-	VerbosePkglists        bool
+	VerbosePkgLists        bool
 	DisableDownloadTimeout bool
 	Repos                  []Repository
 }
