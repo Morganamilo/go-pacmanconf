@@ -68,8 +68,8 @@ func setOption(conf *Config, key string, value string) {
 		conf.CacheDir = append(conf.CacheDir, value)
 	case "HookDir":
 		conf.HookDir = append(conf.HookDir, value)
-	case "GpgDir":
-		conf.GpgDir = value
+	case "GPGDir":
+		conf.GPGDir = value
 	case "LogFile":
 		conf.LogFile = value
 	case "HoldPkg":

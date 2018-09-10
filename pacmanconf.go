@@ -12,7 +12,7 @@ type Config struct {
 	DBPath                 string
 	CacheDir               []string
 	HookDir                []string
-	GpgDir                 string
+	GPGDir                 string
 	LogFile                string
 	HoldPkg                []string
 	IgnorePkg              []string
