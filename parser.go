@@ -100,7 +100,7 @@ func setOption(conf *Config, key string, value string) {
 		conf.Color = true
 	case "UseDelta":
 		f, err := strconv.ParseFloat(value, 64)
-		if err != nil {
+		if err == nil {
 			conf.UseDelta = f
 		}
 	case "TotalDownload":
