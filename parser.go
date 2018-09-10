@@ -19,7 +19,7 @@ func parseCallback(fileName string, line int, section string,
 
 	d, ok := data.(*callbackData)
 	if !ok {
-		return fmt.Errorf("type assert failed when parsing: &s", fileName)
+		return fmt.Errorf("type assert failed when parsing: %s", fileName)
 	}
 
 	if key == "" && value == "" {
