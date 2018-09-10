@@ -131,3 +131,7 @@ func PacmanConf(args ...string) (*Config, string, error) {
 
 	return conf, "", err
 }
+
+func ParseFile(path string) (*Config, string, error) {
+	return PacmanConf("--config", path)
+}
