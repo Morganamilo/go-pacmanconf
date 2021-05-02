@@ -79,7 +79,7 @@ func setOption(conf *Config, key string, value string) {
 	case "IgnoreGroup":
 		conf.IgnoreGroup = append(conf.IgnoreGroup, value)
 	case "Architecture":
-		conf.Architecture = value
+		conf.Architecture = append(conf.Architecture, value)
 	case "XferCommand":
 		conf.XferCommand = value
 	case "NoUpgrade":

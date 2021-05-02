@@ -17,7 +17,7 @@ type Config struct {
 	HoldPkg                []string
 	IgnorePkg              []string
 	IgnoreGroup            []string
-	Architecture           string
+	Architecture           []string
 	XferCommand            string
 	NoUpgrade              []string
 	NoExtract              []string
