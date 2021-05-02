@@ -39,7 +39,7 @@ func TestPacmanconf(t *testing.T) {
 	expect(t, "HoldPkg", []string{"hold", "package"}, conf.HoldPkg)
 	expect(t, "IgnorePkg", []string{"ignore", "package"}, conf.IgnorePkg)
 	expect(t, "IgnoreGroup", []string{"ignore", "group"}, conf.IgnoreGroup)
-	expect(t, "Architecture", "neo-classical", conf.Architecture)
+	expect(t, "Architecture", []string{"neo-classical1", "neo-classical2"}, conf.Architecture)
 	expect(t, "XferCommand", "/path/to/command %u", conf.XferCommand)
 	expect(t, "NoUpgrade", []string{"no", "upgrade"}, conf.NoUpgrade)
 	expect(t, "NoExtract", []string{"no", "extract"}, conf.NoExtract)
